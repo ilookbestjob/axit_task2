@@ -1,0 +1,224 @@
+//Основные параметры
+
+//цвет
+$MenuPanelWrapperColor: rgb(236, 236, 236);
+
+//Отступ
+$MenuPanelWrapperPadding: 30px;
+
+//Основные шрифты панели меню
+@mixin MenuPanelFont($size: 14px, $weight: 300) {
+  color: rgb(82, 79, 100);
+  font-family: tahoma;
+  font-weight: $weight;
+  font-size: $size;
+}
+
+//Цвет кнопки
+$ButtonColor: rgb(4, 190, 45);
+$ButtonColor2: rgb(173, 175, 180);
+//Размеры кнопок
+$OperatingButtonSize: 50px;
+
+@mixin Button($color: $ButtonColor) {
+  margin: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 25px;
+  background-color: $color;
+  border: 1px solid darken($color, 5%);
+  box-shadow: 0px 0px 2px 2px #00000013, inset 0px 0px 2px 2px #ffffff10;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+@mixin ButtonHover($color: $ButtonColor) {
+  background-color: lighten($color, 5%);
+}
+
+@mixin ButtonRounded($color: $ButtonColor) {
+  margin: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: $OperatingButtonSize;
+  height: $OperatingButtonSize;
+  border-radius: 50%;
+  background-color: $color;
+  border: 1px solid darken($color, 5%);
+  box-shadow: 0px 0px 2px 2px #00000013, inset 0px 0px 2px 2px #ffffff10;
+  color: #fff;
+  cursor: pointer;
+}
+
+@mixin ButtonRoundedHover($color: $ButtonColor) {
+  background-color: lighten($color, 5%);
+}
+
+@mixin arrowbody {
+  height: 0;
+  width: 0;
+  border: 15px solid transparent;
+  border-bottom-color: darken($ButtonColor2, 40%);
+}
+
+.MenuPanelWrapper {
+  width: 100%;
+  height: 100%;
+  background-color: $MenuPanelWrapperColor;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.ScorePanel {
+  margin-top: 30px;
+  padding-left: $MenuPanelWrapperPadding;
+  padding-right: $MenuPanelWrapperPadding;
+  display: block;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.ScorePanelTitle {
+  @include MenuPanelFont(18px);
+}
+.ScorePanelData {
+  @include MenuPanelFont(16px);
+  margin-left: 6px;
+}
+
+.StatusPanel {
+  margin-top: 30px;
+  padding-left: $MenuPanelWrapperPadding;
+  padding-right: $MenuPanelWrapperPadding;
+  display: block;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.StatusPanelTitle {
+  @include MenuPanelFont(18px);
+}
+.StatusPanelData {
+  @include MenuPanelFont(16px);
+  margin-left: 6px;
+}
+
+.LauncherPanel {
+  margin-top: 30px;
+  padding-left: $MenuPanelWrapperPadding;
+  padding-right: $MenuPanelWrapperPadding;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+.LauncherPanelStart {
+  @include Button;
+}
+.LauncherPanelStart:hover {
+  @include ButtonHover;
+}
+
+.LauncherPanelStop {
+  @include Button($ButtonColor2);
+}
+.LauncherPanelStop:hover {
+  @include ButtonHover($ButtonColor2);
+}
+
+.OperatingWrapper {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+}
+
+.OperatingPanel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: $OperatingButtonSize;
+  align-self: flex-end;
+  justify-self: center;
+  margin-bottom: 30px;
+}
+.OperatingPanelUp {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  justify-self: center;
+  @include ButtonRounded($ButtonColor2);
+}
+.OperatingPanelUp:hover {
+  background-color: lighten($ButtonColor2, 5%);
+  .ArrowUp{
+ 
+    border-bottom-color: darken($ButtonColor2, 20%);}
+}
+
+.OperatingPanelLeft {
+  justify-self: flex-end;
+  @include ButtonRounded($ButtonColor2);
+}
+.OperatingPanelLeft:hover {
+  background-color: lighten($ButtonColor2, 5%);
+  .ArrowLeft{
+ 
+    border-bottom-color: darken($ButtonColor2, 20%);}
+}
+
+.OperatingPanelRight {
+  justify-self: flex-start;
+  @include ButtonRounded($ButtonColor2);
+}
+.OperatingPanelRight:hover {
+  background-color: lighten($ButtonColor2, 5%);
+
+  .ArrowRight{
+ 
+    border-bottom-color: darken($ButtonColor2, 20%);}
+}
+
+.OperatingPanelDown {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  justify-self: center;
+  @include ButtonRounded($ButtonColor2);
+}
+
+.OperatingPanelDown:hover{ 
+    background-color: lighten($ButtonColor2, 5%);
+
+
+    .ArrowBottom{
+ 
+    border-bottom-color: darken($ButtonColor2, 20%);}
+ 
+}
+
+
+.ArrowUp {
+  @include arrowbody;
+  margin-bottom: 18px;
+}
+
+.ArrowLeft {
+  @include arrowbody;
+  margin-right: 18px;
+  transform: rotate(-90deg);
+}
+.ArrowRight {
+  @include arrowbody;
+  margin-left: 18px;
+  transform: rotate(90deg);
+}
+
+.ArrowBottom {
+  @include arrowbody;
+  margin-top: 18px;
+  transform: rotate(180deg);
+}
