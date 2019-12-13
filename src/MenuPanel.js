@@ -16,9 +16,14 @@ class MenuPanel extends React.Component {
       clearInterval(this.TimerPointer);
     };
 this.setDot=()=>{
-  const LEFT= Math.floor(Math.random() * this.props.Data.Dimensions.width)
-  const TOP= Math.floor(Math.random() * this.props.Data.Dimensions.height)
-  this.props.setDot(LEFT,TOP)
+  const LEFT= Math.floor(Math.random() * this.props.Data.Dimensions.width)+1
+  const TOP= Math.floor(Math.random() * this.props.Data.Dimensions.height)+1
+  
+  const DOTTYPE= Math.floor(Math.random() *( this.props.Data.DotTypes.length))
+  
+  console.log(DOTTYPE)
+
+  this.props.setDot(LEFT,TOP,DOTTYPE)
 }
 
     this.SnakeActions = () => {
@@ -63,7 +68,7 @@ this.setDot=()=>{
           ) {
             this.props.increaseSnake(
               this.props.Data.Dot.position.left,
-              this.props.Data.Dot.position.top
+              this.props.Data.Dot.position.top,this.props.Data.DotTypes[this.props.Data.Dot.DotType].score,this.props.Data.DotTypes[this.props.Data.Dot.DotType].picture
             );
             this.setDot();
           } else {
@@ -79,7 +84,7 @@ this.setDot=()=>{
       <div className="MenuPanelWrapper">
         <div className="ScorePanel">
           <div className="ScorePanelTitle">Score </div>
-          <div className="ScorePanelData">{this.props.Data.Score} </div>
+          <div className="ScorePanelData">{this.props.Data.Score.Total} </div>
         </div>
         <div className="StatusPanel">
           <div className="StatusPanelTitle">Статус </div>
@@ -174,11 +179,11 @@ export default connect(
     resetSnake: () => {
       dispatch({ type: "SET_SNAKE_STARTPOSITION" });
     },
-    increaseSnake: (left, top) => {
-      dispatch({ type: "INCREASE_SNAKE", left: left, top: top });
+    increaseSnake: (left, top,increasement,picture) => {
+      dispatch({ type: "INCREASE_SNAKE", left: left, top: top,increasement:increasement,picture:picture });
     },
-    setDot: (left, top) => {
-      dispatch({ type: "SET_NEW_DOT", left: left, top: top });
+    setDot: (left, top,DotType) => {
+      dispatch({ type: "SET_NEW_DOT", left: left, top: top,DotType:DotType });
     }
   })
 )(MenuPanel);

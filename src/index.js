@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux";
-import { Provider } from "react-redux";
+import { Provider, connectAdvanced } from "react-redux";
 import "./index.css";
 import "./PlayArea.scss";
 import "./MenuPanel.scss";
@@ -9,9 +9,9 @@ import PlayArea from "./PlayArea";
 import MenuPanel from "./MenuPanel";
 
 const InitialState = {
-  Score: 0,
+  Score: { Total: 0 ,TypesCount:{}},
   GameStatus: "Не начата",
-  Dimensions: { width: 40, height: 20 },
+  Dimensions: { width: 30, height: 20 },
   Snake: {
     positions: [
       { left: 3, top: 1 },
@@ -23,12 +23,32 @@ const InitialState = {
       { left: 3, top: 7 },
       { left: 3, top: 8 },
       { left: 3, top: 9 },
-      { left: 3, top: 10  }
+      { left: 3, top: 10 }
     ],
     TopDirection: 1,
     LeftDirection: 0
   },
-  Dot: { position: { left: 6, top: 9 } }
+  SnakePictures: ["Car.png", "Home.png", "Car.png"],
+  Dot: { position: { left: 6, top: 9 }, DotType: 0 },
+  DotTypes: [
+    {
+      name: "Машина",
+      score: 500,
+      color: "#ССС",
+      picture: "Car.png",
+      sound: ""
+    },
+    { name: "Дом", score: 2000, color: "#ССС", picture: "Home.png", sound: "" },
+    { name: "Сюрприз", score: 300, color: "#ССС", picture: "Present.png", sound: "" },  { name: "Сюрприз", score: 100, color: "#ССС", picture: "Perfume.png", sound: "" }, { name: "Компьютер", score: 100, color: "#ССС", picture: "Computer.png", sound: "" }
+  
+  
+
+   
+  
+  
+  ]
+
+   
 };
 
 const Reducer = (state = InitialState, action) => {
@@ -48,46 +68,56 @@ const Reducer = (state = InitialState, action) => {
     case "PAUSE_GAME":
       newState = { ...state, GameStatus: "Остановлена" };
       return newState;
-      case "GAMOVER_GAME":
-        newState = { ...state, GameStatus: "Проиграна" };
-        return newState;
-  
+    case "GAMOVER_GAME":
+      newState = { ...state, GameStatus: "Проиграна" };
+      return newState;
 
     case "INCREASE_SNAKE":
-        tempArray = [...state.Snake.positions,{left:action.left,top:action.top}];
-       
-        newState = {
-          ...state,
-          Snake: {
-            positions: tempArray,
-            TopDirection: state.Snake.TopDirection,
-            LeftDirection: state.Snake.LeftDirection
-          }
-        };
-        return newState;
+      tempArray = [
+        ...state.Snake.positions,
+        { left: action.left, top: action.top }
+      ];
+
+      newState = {
+        ...state,
+        Score: { Total: state.Score.Total + action.increasement,TypesCount:{...state.Score.TypesCount,[action.picture]:state.Score.TypesCount[action.picture]?state.Score.TypesCount[action.picture]+1:1}},
+        Snake: {
+          positions: tempArray,
+          TopDirection: state.Snake.TopDirection,
+          LeftDirection: state.Snake.LeftDirection
+        },
+        SnakePictures: [...state.SnakePictures, action.picture]
+      };
+     console.log(newState)
+
+      return newState;
     case "SET_NEW_DOT":
-        newState = {
-          ...state,
-          Dot: {
-            position:{left:action.left,top:action.top}
-           
-          }
-        };
-        return newState;
+      console.log(action.DotType, action.left, action.top);
+      newState = {
+        ...state,
+        Dot: {
+          position: {
+            left: action.left,
+            top: action.top
+          },
+          DotType: action.DotType
+        }
+      };
+      return newState;
       return;
     case "SET_SNAKE_STARTPOSITION":
       newState = {
         ...state,
         Snake: {
           positions: [
-            { left: 3, top: 1 },
-            { left: 3, top: 2 },
-            { left: 3, top: 3 },
-           
+            { left: 3, top: 1, color: "#ccc", picture: "" },
+            { left: 3, top: 2, color: "#ccc", picture: "" },
+            { left: 3, top: 3, color: "#ccc", picture: "" }
           ],
           TopDirection: 1,
           LeftDirection: 0
-        }
+        },
+        SnakePictures: ["Car.png", "Home.png", "Car.png"]
       };
       return newState;
 
@@ -154,6 +184,7 @@ const Reducer = (state = InitialState, action) => {
           LeftDirection: 0
         }
       };
+
       return newState;
 
     default:
@@ -161,7 +192,9 @@ const Reducer = (state = InitialState, action) => {
   }
 };
 const store = createStore(Reducer, InitialState);
-
+store.subscribe(() => {
+  //console.log(store.getState());
+});
 ReactDOM.render(
   <Provider store={store}>
     <div className="GameLayout">

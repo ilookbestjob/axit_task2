@@ -5,8 +5,18 @@ import ReactHtmlParser from "react-html-parser";
 class PlayArea extends React.Component {
   constructor(props) {
     super(props);
+this.SnakeItemIndex=(PlayAreaCol, PlayAreaRow)=>
+  this.props.Data.Snake.positions.findIndex(
+    SnakePosition =>
+      SnakePosition.left === PlayAreaCol &&
+      SnakePosition.top === PlayAreaRow
+  )
+
+
+
     this.GET_AREA = () => {
       let PlayAreaField = "";
+      
       for (
         let PlayAreaRow = 1;
         PlayAreaRow <= this.props.Data.Dimensions.height;
@@ -17,21 +27,19 @@ class PlayArea extends React.Component {
           PlayAreaCol <= this.props.Data.Dimensions.width;
           PlayAreaCol++
         ) {
+          const SNAKEITEMINDEX=this.SnakeItemIndex(PlayAreaCol, PlayAreaRow)
           if ((
-            this.props.Data.Snake.positions.findIndex(
-              SnakePosition =>
-                SnakePosition.left === PlayAreaCol &&
-                SnakePosition.top === PlayAreaRow
-            ) !== -1
+            SNAKEITEMINDEX!== -1
           )&&(this.props.Data.GameStatus!=="Не начата")) {
             PlayAreaField =
-              PlayAreaField + '<div class="PlayAreaSnakeDot"></div>';
+              PlayAreaField + '<div class="PlayAreaSnakeDot"><img class="PlayAreaDotPicture" src="img/'+ this.props.Data.SnakePictures[ SNAKEITEMINDEX]+'"/></div>';
           } else {
             if (
               this.props.Data.Dot.position.left === PlayAreaCol &&
               this.props.Data.Dot.position.top === PlayAreaRow
             ) {
-              PlayAreaField = PlayAreaField + '<div class="PlayAreaDot"></div>';
+            
+              PlayAreaField = PlayAreaField + '<div class="PlayAreaDot"><img class="PlayAreaDotPicture" src="img/'+ this.props.Data.DotTypes[this.props.Data.Dot.DotType*1].picture+'"></div>';
             } else {
               PlayAreaField =
                 PlayAreaField + '<div class="PlayAreaEmptyDot"></div>';

@@ -1,37 +1,52 @@
-$PlayAreaEmptyDotColor: rgb(238, 231, 231);
+$PlayAreaEmptyDotColor: rgb(255, 255, 255);
 $PlayAreaSnakeDotColor: rgb(106, 228, 69);
-$PlayAreaDotColor: rgb(255, 208, 0);
+$PlayAreaDotColor: $PlayAreaEmptyDotColor;
 
 .PlayArea {
   background-color: lighten($PlayAreaEmptyDotColor, 10%);
   border: 1px solid #ccc;
   padding: 20px;
   overflow-wrap: normal;
+  
 }
 
 .PlayAreaEmptyDot {
-  margin: 1px;
+  margin: 0px;
   height: 30px;
-  border: 1px solid darken($PlayAreaEmptyDotColor, 20%);
+  border: 1px solid darken($PlayAreaEmptyDotColor, 5%);
   background-color: $PlayAreaEmptyDotColor;
   padding-bottom: 100%;
   height: 0;
 }
 
 .PlayAreaSnakeDot {
-  margin: 1px;
+  margin: 0px;
   height: 30px;
-  border: 1px solid darken($PlayAreaSnakeDotColor, 20%);
+  border: 1px solid darken($PlayAreaSnakeDotColor, 5%);
   background-color: $PlayAreaSnakeDotColor;
   padding-bottom: 100%;
   height: 0;
+  display:flex;
+  align-content: center;
+  align-items:center;
+  box-shadow: inset 0px 0px 3px 2px lighten($PlayAreaSnakeDotColor ,20%);
 }
 
 .PlayAreaDot {
-  margin: 1px;
+  margin: 0px;
   height: 30px;
-  border: 1px solid darken($PlayAreaDotColor, 20%);
-  background-color: $PlayAreaDotColor;
+  border: 1px solid darken($PlayAreaDotColor, 5%);
+  //background-color: $PlayAreaDotColor;
   padding-bottom: 100%;
   height: 0;
+  display:flex;
+  align-content: center;
+  align-items:center;
+}
+
+.PlayAreaDotPicture{
+  width:100%;
+  height:auto;
+  margin-bottom:-100%;
+  align-self: center;
 }
