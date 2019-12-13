@@ -9,7 +9,7 @@ import PlayArea from "./PlayArea";
 import MenuPanel from "./MenuPanel";
 
 const InitialState = {
-  Score: { Total: 0 ,TypesCount:{}},
+  Score: { Total: 0, TypesCount: [] },
   GameStatus: "Не начата",
   Dimensions: { width: 30, height: 20 },
   Snake: {
@@ -28,6 +28,7 @@ const InitialState = {
     TopDirection: 1,
     LeftDirection: 0
   },
+  ReverseDirection:'up',
   SnakePictures: ["Car.png", "Home.png", "Car.png"],
   Dot: { position: { left: 6, top: 9 }, DotType: 0 },
   DotTypes: [
@@ -39,16 +40,28 @@ const InitialState = {
       sound: ""
     },
     { name: "Дом", score: 2000, color: "#ССС", picture: "Home.png", sound: "" },
-    { name: "Сюрприз", score: 300, color: "#ССС", picture: "Present.png", sound: "" },  { name: "Сюрприз", score: 100, color: "#ССС", picture: "Perfume.png", sound: "" }, { name: "Компьютер", score: 100, color: "#ССС", picture: "Computer.png", sound: "" }
-  
-  
-
-   
-  
-  
+    {
+      name: "Сюрприз",
+      score: 300,
+      color: "#ССС",
+      picture: "Present.png",
+      sound: ""
+    },
+    {
+      name: "Сюрприз",
+      score: 100,
+      color: "#ССС",
+      picture: "Perfume.png",
+      sound: ""
+    },
+    {
+      name: "Компьютер",
+      score: 100,
+      color: "#ССС",
+      picture: "Computer.png",
+      sound: ""
+    }
   ]
-
-   
 };
 
 const Reducer = (state = InitialState, action) => {
@@ -56,7 +69,11 @@ const Reducer = (state = InitialState, action) => {
   let tempArray;
   switch (action.type) {
     case "START_GAME":
-      newState = { ...state, GameStatus: "Начата" };
+      newState = {
+        ...state,
+        GameStatus: "Начата",
+        Score: { Total: 0, TypesCount: [] }
+      };
       return newState;
       return;
     case "RESET_GAME":
@@ -77,10 +94,22 @@ const Reducer = (state = InitialState, action) => {
         ...state.Snake.positions,
         { left: action.left, top: action.top }
       ];
-
+      let tempTypesCount = [...state.Score.TypesCount];
+      let TypesCountIndex = tempTypesCount.findIndex(
+        Item => Item.CountType === action.DotType
+      );
+      if (TypesCountIndex === -1) {
+        tempTypesCount.push({ CountType: action.DotType, Score: 1 });
+      } else {
+        tempTypesCount[TypesCountIndex].Score =
+          tempTypesCount[TypesCountIndex].Score + 1;
+      }
       newState = {
         ...state,
-        Score: { Total: state.Score.Total + action.increasement,TypesCount:{...state.Score.TypesCount,[action.picture]:state.Score.TypesCount[action.picture]?state.Score.TypesCount[action.picture]+1:1}},
+        Score: {
+          Total: state.Score.Total + action.increasement,
+          TypesCount: tempTypesCount
+        },
         Snake: {
           positions: tempArray,
           TopDirection: state.Snake.TopDirection,
@@ -88,7 +117,7 @@ const Reducer = (state = InitialState, action) => {
         },
         SnakePictures: [...state.SnakePictures, action.picture]
       };
-     console.log(newState)
+      console.log(newState);
 
       return newState;
     case "SET_NEW_DOT":
@@ -151,7 +180,7 @@ const Reducer = (state = InitialState, action) => {
           positions: [...state.Snake.positions],
           TopDirection: 0,
           LeftDirection: -1
-        }
+        },ReverseDirection:'right'
       };
       return newState;
     case "SET_SNAKEDIRECTION_RIGHT":
@@ -161,7 +190,7 @@ const Reducer = (state = InitialState, action) => {
           positions: [...state.Snake.positions],
           TopDirection: 0,
           LeftDirection: 1
-        }
+        },ReverseDirection:'left'
       };
       return newState;
 
@@ -172,7 +201,7 @@ const Reducer = (state = InitialState, action) => {
           positions: [...state.Snake.positions],
           TopDirection: -1,
           LeftDirection: 0
-        }
+        },ReverseDirection:'down'
       };
       return newState;
     case "SET_SNAKEDIRECTION_DOWN":
@@ -182,7 +211,7 @@ const Reducer = (state = InitialState, action) => {
           positions: [...state.Snake.positions],
           TopDirection: 1,
           LeftDirection: 0
-        }
+        },ReverseDirection:'up'
       };
 
       return newState;

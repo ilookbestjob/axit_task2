@@ -53,16 +53,20 @@ this.SnakeItemIndex=(PlayAreaCol, PlayAreaRow)=>
     this.KeydownEventHandler = event => {
       switch (event.code) {
         case "ArrowUp":
-            this.props.setSnakeDirectionUp();
+          if (this.props.Data.ReverseDirection!=="up"){
+            this.props.setSnakeDirectionUp();}
          break;
          case "ArrowDown":
-            this.props.setSnakeDirectionDown();
+          if (this.props.Data.ReverseDirection!=="down"){
+            this.props.setSnakeDirectionDown();}
          break;
          case "ArrowLeft":
-            this.props.setSnakeDirectionLeft();
+          if (this.props.Data.ReverseDirection!=="left"){
+            this.props.setSnakeDirectionLeft();}
          break;
          case "ArrowRight":
-            this.props.setSnakeDirectionRight();
+          if (this.props.Data.ReverseDirection!=="right"){
+            this.props.setSnakeDirectionRight();}
          break;
       }
 

@@ -65,6 +65,11 @@ $OperatingButtonSize: 50px;
   border-bottom-color: darken($ButtonColor2, 40%);
 }
 
+@mixin pagepadding {
+  padding-left: $MenuPanelWrapperPadding;
+  padding-right: $MenuPanelWrapperPadding;
+}
+
 .MenuPanelWrapper {
   width: 100%;
   height: 100%;
@@ -76,8 +81,7 @@ $OperatingButtonSize: 50px;
 
 .ScorePanel {
   margin-top: 30px;
-  padding-left: $MenuPanelWrapperPadding;
-  padding-right: $MenuPanelWrapperPadding;
+  @include pagepadding;
   display: block;
   justify-content: flex-end;
   align-items: center;
@@ -93,8 +97,7 @@ $OperatingButtonSize: 50px;
 
 .StatusPanel {
   margin-top: 30px;
-  padding-left: $MenuPanelWrapperPadding;
-  padding-right: $MenuPanelWrapperPadding;
+  @include pagepadding;
   display: block;
   justify-content: flex-start;
   align-items: center;
@@ -110,8 +113,7 @@ $OperatingButtonSize: 50px;
 
 .LauncherPanel {
   margin-top: 30px;
-  padding-left: $MenuPanelWrapperPadding;
-  padding-right: $MenuPanelWrapperPadding;
+  @include pagepadding;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -155,9 +157,9 @@ $OperatingButtonSize: 50px;
 }
 .OperatingPanelUp:hover {
   background-color: lighten($ButtonColor2, 5%);
-  .ArrowUp{
- 
-    border-bottom-color: darken($ButtonColor2, 20%);}
+  .ArrowUp {
+    border-bottom-color: darken($ButtonColor2, 20%);
+  }
 }
 
 .OperatingPanelLeft {
@@ -166,9 +168,9 @@ $OperatingButtonSize: 50px;
 }
 .OperatingPanelLeft:hover {
   background-color: lighten($ButtonColor2, 5%);
-  .ArrowLeft{
- 
-    border-bottom-color: darken($ButtonColor2, 20%);}
+  .ArrowLeft {
+    border-bottom-color: darken($ButtonColor2, 20%);
+  }
 }
 
 .OperatingPanelRight {
@@ -178,9 +180,9 @@ $OperatingButtonSize: 50px;
 .OperatingPanelRight:hover {
   background-color: lighten($ButtonColor2, 5%);
 
-  .ArrowRight{
- 
-    border-bottom-color: darken($ButtonColor2, 20%);}
+  .ArrowRight {
+    border-bottom-color: darken($ButtonColor2, 20%);
+  }
 }
 
 .OperatingPanelDown {
@@ -190,16 +192,13 @@ $OperatingButtonSize: 50px;
   @include ButtonRounded($ButtonColor2);
 }
 
-.OperatingPanelDown:hover{ 
-    background-color: lighten($ButtonColor2, 5%);
+.OperatingPanelDown:hover {
+  background-color: lighten($ButtonColor2, 5%);
 
-
-    .ArrowBottom{
- 
-    border-bottom-color: darken($ButtonColor2, 20%);}
- 
+  .ArrowBottom {
+    border-bottom-color: darken($ButtonColor2, 20%);
+  }
 }
-
 
 .ArrowUp {
   @include arrowbody;
@@ -222,3 +221,29 @@ $OperatingButtonSize: 50px;
   margin-top: 18px;
   transform: rotate(180deg);
 }
+
+.CountersWrapper {
+  @include pagepadding;
+}
+.CounterImage {
+  height: 25px;
+  width: auto;
+}
+.ContersData {
+  margin-right: 0px;
+  margin-left: 85px;
+  color: rgb(72, 80, 97);
+  font-size: 16px;
+  font-weight:400;
+  font-family: tahoma;
+  display: grid;
+  grid-template-columns: 60px 100px;
+ // border:1px solid #ccc
+}
+
+.CountersHeader{
+  @include MenuPanelFont(18px);
+  margin-bottom: 20px;
+  margin-left:30px;
+}
+

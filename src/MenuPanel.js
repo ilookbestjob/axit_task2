@@ -15,26 +15,30 @@ class MenuPanel extends React.Component {
       this.props.stopGame();
       clearInterval(this.TimerPointer);
     };
-this.setDot=()=>{
-  const LEFT= Math.floor(Math.random() * this.props.Data.Dimensions.width)+1
-  const TOP= Math.floor(Math.random() * this.props.Data.Dimensions.height)+1
-  
-  const DOTTYPE= Math.floor(Math.random() *( this.props.Data.DotTypes.length))
-  
-  console.log(DOTTYPE)
+    this.setDot = () => {
+      const LEFT =
+        Math.floor(Math.random() * this.props.Data.Dimensions.width) + 1;
+      const TOP =
+        Math.floor(Math.random() * this.props.Data.Dimensions.height) + 1;
 
-  this.props.setDot(LEFT,TOP,DOTTYPE)
-}
+      const DOTTYPE = Math.floor(
+        Math.random() * this.props.Data.DotTypes.length
+      );
+
+      console.log(DOTTYPE);
+
+      this.props.setDot(LEFT, TOP, DOTTYPE);
+    };
 
     this.SnakeActions = () => {
       let tempArray = [...this.props.Data.Snake.positions];
       let SnakeHead = tempArray[tempArray.length - 1];
       if (
-        tempArray[tempArray.length - 1].left <= 1 ||
-        tempArray[tempArray.length - 1].left >=
+        tempArray[tempArray.length - 1].left < 1 ||
+        tempArray[tempArray.length - 1].left >
           this.props.Data.Dimensions.width ||
-        tempArray[tempArray.length - 1].top <= 1 ||
-        tempArray[tempArray.length - 1].top >= this.props.Data.Dimensions.height
+        tempArray[tempArray.length - 1].top < 1 ||
+        tempArray[tempArray.length - 1].top > this.props.Data.Dimensions.height
       ) {
         this.props.gamoverGame();
         clearInterval(this.TimerPointer);
@@ -68,7 +72,10 @@ this.setDot=()=>{
           ) {
             this.props.increaseSnake(
               this.props.Data.Dot.position.left,
-              this.props.Data.Dot.position.top,this.props.Data.DotTypes[this.props.Data.Dot.DotType].score,this.props.Data.DotTypes[this.props.Data.Dot.DotType].picture
+              this.props.Data.Dot.position.top,
+              this.props.Data.DotTypes[this.props.Data.Dot.DotType].score,
+              this.props.Data.Dot.DotType,
+              this.props.Data.DotTypes[this.props.Data.Dot.DotType].picture
             );
             this.setDot();
           } else {
@@ -109,6 +116,24 @@ this.setDot=()=>{
           >
             Стоп
           </div>
+        </div>
+          <div className="CountersWrapper"><div className="CountersHeader">Собрано {this.props.Data.Snake.positions.length-3}</div >
+          {this.props.Data.Score.TypesCount.map(Type => (
+            <div className="ContersData">
+              <div>
+                <img
+                  className="CounterImage"
+                  src={
+                    "img/" + this.props.Data.DotTypes[Type.CountType].picture
+                  }
+                />
+              </div>
+              <div>
+                х{Type.Score}=
+                {Type.Score * this.props.Data.DotTypes[Type.CountType].score}
+              </div>
+            </div>
+          ))}
         </div>
         <div className="OperatingWrapper">
           <div className="OperatingPanel">
@@ -179,11 +204,18 @@ export default connect(
     resetSnake: () => {
       dispatch({ type: "SET_SNAKE_STARTPOSITION" });
     },
-    increaseSnake: (left, top,increasement,picture) => {
-      dispatch({ type: "INCREASE_SNAKE", left: left, top: top,increasement:increasement,picture:picture });
+    increaseSnake: (left, top, increasement, DotType, picture) => {
+      dispatch({
+        type: "INCREASE_SNAKE",
+        left: left,
+        top: top,
+        increasement: increasement,
+        DotType: DotType,
+        picture: picture
+      });
     },
-    setDot: (left, top,DotType) => {
-      dispatch({ type: "SET_NEW_DOT", left: left, top: top,DotType:DotType });
+    setDot: (left, top, DotType) => {
+      dispatch({ type: "SET_NEW_DOT", left: left, top: top, DotType: DotType });
     }
   })
 )(MenuPanel);
