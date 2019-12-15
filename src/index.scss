@@ -1,0 +1,25 @@
+
+$MenuPanelWrapperColor: rgb(236, 236, 236);
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $MenuPanelWrapperColor;
+  ;
+}
+
+.GameLayout {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-column-gap: 10px;
+
+ 
+}

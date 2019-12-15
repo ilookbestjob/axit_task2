@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux";
 import { Provider, connectAdvanced } from "react-redux";
-import "./index.css";
+import "./index.scss";
 import "./PlayArea.scss";
 import "./MenuPanel.scss";
 import PlayArea from "./PlayArea";
@@ -11,7 +11,8 @@ import MenuPanel from "./MenuPanel";
 const InitialState = {
   Score: { Total: 0, TypesCount: [] },
   GameStatus: "Не начата",
-  Dimensions: { width: 30, height: 20 },
+  DotWidth:30,
+  Dimensions: { width: 20, height: 20 },
   Snake: {
     positions: [
       { left: 3, top: 1 },
@@ -28,7 +29,7 @@ const InitialState = {
     TopDirection: 1,
     LeftDirection: 0
   },
-  ReverseDirection:'up',
+  ReverseDirection: "up",
   SnakePictures: ["Car.png", "Home.png", "Car.png"],
   Dot: { position: { left: 6, top: 9 }, DotType: 0 },
   DotTypes: [
@@ -68,7 +69,15 @@ const Reducer = (state = InitialState, action) => {
   let newState;
   let tempArray;
   switch (action.type) {
+    case "SET_WIDTH":
+      newState = { ...state,   Dimensions: { width: action.width, height: state.Dimensions.height } };
+      return newState;
+
+      case "SET_HEIGHT":
+        newState = { ...state,   Dimensions: { width: state.Dimensions.width, height: action.height } };
+        return newState;
     case "START_GAME":
+      
       newState = {
         ...state,
         GameStatus: "Начата",
@@ -180,7 +189,8 @@ const Reducer = (state = InitialState, action) => {
           positions: [...state.Snake.positions],
           TopDirection: 0,
           LeftDirection: -1
-        },ReverseDirection:'right'
+        },
+        ReverseDirection: "right"
       };
       return newState;
     case "SET_SNAKEDIRECTION_RIGHT":
@@ -190,7 +200,8 @@ const Reducer = (state = InitialState, action) => {
           positions: [...state.Snake.positions],
           TopDirection: 0,
           LeftDirection: 1
-        },ReverseDirection:'left'
+        },
+        ReverseDirection: "left"
       };
       return newState;
 
@@ -201,7 +212,8 @@ const Reducer = (state = InitialState, action) => {
           positions: [...state.Snake.positions],
           TopDirection: -1,
           LeftDirection: 0
-        },ReverseDirection:'down'
+        },
+        ReverseDirection: "down"
       };
       return newState;
     case "SET_SNAKEDIRECTION_DOWN":
@@ -211,7 +223,8 @@ const Reducer = (state = InitialState, action) => {
           positions: [...state.Snake.positions],
           TopDirection: 1,
           LeftDirection: 0
-        },ReverseDirection:'up'
+        },
+        ReverseDirection: "up"
       };
 
       return newState;
