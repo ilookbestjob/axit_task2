@@ -7,6 +7,7 @@ $MenuPanelWrapperColor: rgb(236, 236, 236);
 $MenuPanelWrapperPadding: 30px;
 
 //Основные шрифты панели меню
+
 @mixin MenuPanelFont($size: 14px, $weight: 300) {
   color: rgb(82, 79, 100);
   font-family: tahoma;
@@ -16,9 +17,9 @@ $MenuPanelWrapperPadding: 30px;
 
 //Цвет кнопки
 $ButtonColor: rgb(4, 190, 45);
-$ButtonColor2: rgb(173, 175, 180);
+$ButtonColor2: rgb(218, 219, 221);
 //Размеры кнопок
-$OperatingButtonSize: 50px;
+$OperatingButtonSize: 70px;
 
 @mixin Button($color: $ButtonColor) {
   margin: 3px;
@@ -29,7 +30,7 @@ $OperatingButtonSize: 50px;
   height: 25px;
   background-color: $color;
   border: 1px solid darken($color, 5%);
-  box-shadow: 0px 0px 2px 2px #00000013, inset 0px 0px 2px 2px #ffffff10;
+  box-shadow: 0px 0px 2px 2px #00000013, inset 0px 0px 20px 20px #ffffff05;
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
@@ -44,12 +45,13 @@ $OperatingButtonSize: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: $OperatingButtonSize;
-  height: $OperatingButtonSize;
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+
   background-color: $color;
   border: 1px solid darken($color, 5%);
-  box-shadow: 0px 0px 2px 2px #00000013, inset 0px 0px 2px 2px #ffffff10;
+  box-shadow: inset 0px 0px 2px 2px #ffffff10;
+  background: linear-gradient(lighten($color,5%)0%,lighten($color,5%)50%,$color 50%,$color 100%);
   color: #fff;
   cursor: pointer;
 }
@@ -70,21 +72,38 @@ $OperatingButtonSize: 50px;
   padding-right: $MenuPanelWrapperPadding;
 }
 
-.MenuPanelWrapper {
-  width: 100%;
-  height: 100%;
-  background-color: $MenuPanelWrapperColor;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
+@media (min-width: 768px) {
+  .MenuPanelWrapper {
+    width: 100%;
+    height: 100%;
+    background-color: $MenuPanelWrapperColor;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
 }
 
-.ScorePanel {
-  margin-top: 30px;
-  @include pagepadding;
-  display: block;
-  justify-content: flex-end;
-  align-items: center;
+@media (max-width: 767px) {
+  .MenuPanelWrapper {
+    width: 100%;
+    height: 100%;
+    background-color: $MenuPanelWrapperColor;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin-bottom: 200px;
+    background:linear-gradient(darken($MenuPanelWrapperColor,10%)0%,$MenuPanelWrapperColor 6%,$MenuPanelWrapperColor 100%)
+  }
+}
+
+@media (min-width: 768px) {
+  .ScorePanel {
+    margin-top: 30px;
+    @include pagepadding;
+    display: block;
+    justify-content: flex-end;
+    align-items: center;
+  }
 }
 
 .ScorePanelTitle {
@@ -136,23 +155,20 @@ $OperatingButtonSize: 50px;
 .OperatingWrapper {
   display: flex;
 
-  align-items: flex-end;
-  justify-content: center;
   width: 100%;
 }
 
 .OperatingPanel {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: $OperatingButtonSize;
+
   align-self: flex-end;
   justify-self: center;
   margin-bottom: 30px;
+  width: 100%;
 }
 .OperatingPanelUp {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  justify-self: center;
+  height: 100px;
   @include ButtonRounded($ButtonColor2);
 }
 .OperatingPanelUp:hover {
@@ -163,8 +179,9 @@ $OperatingButtonSize: 50px;
 }
 
 .OperatingPanelLeft {
-  justify-self: flex-end;
   @include ButtonRounded($ButtonColor2);
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .OperatingPanelLeft:hover {
   background-color: lighten($ButtonColor2, 5%);
@@ -174,7 +191,8 @@ $OperatingButtonSize: 50px;
 }
 
 .OperatingPanelRight {
-  justify-self: flex-start;
+  padding-top: 5px;
+  padding-bottom: 5px;
   @include ButtonRounded($ButtonColor2);
 }
 .OperatingPanelRight:hover {
@@ -186,9 +204,6 @@ $OperatingButtonSize: 50px;
 }
 
 .OperatingPanelDown {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  justify-self: center;
   @include ButtonRounded($ButtonColor2);
 }
 
@@ -234,16 +249,31 @@ $OperatingButtonSize: 50px;
   margin-left: 85px;
   color: rgb(72, 80, 97);
   font-size: 16px;
-  font-weight:400;
+  font-weight: 400;
   font-family: tahoma;
   display: grid;
   grid-template-columns: 60px 100px;
- // border:1px solid #ccc
+  // border:1px solid #ccc
 }
 
-.CountersHeader{
+.CountersHeader {
   @include MenuPanelFont(18px);
   margin-bottom: 20px;
-  margin-left:30px;
+  margin-left: 30px;
 }
 
+///Оптимизация под мобильные устройства
+
+@media (max-width: 767px) {
+  .ScorePanel {
+    margin-top:15px;
+    margin-left:15px;
+  }
+  .StatusPanel {
+    margin-top:15px
+  }
+  .CountersWrapper {
+    display: none;
+  }
+
+}

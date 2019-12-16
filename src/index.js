@@ -11,7 +11,7 @@ import MenuPanel from "./MenuPanel";
 const InitialState = {
   Score: { Total: 0, TypesCount: [] },
   GameStatus: "Не начата",
-  DotWidth:30,
+  DotWidth: 30,
   Dimensions: { width: 20, height: 20 },
   Snake: {
     positions: [
@@ -70,14 +70,19 @@ const Reducer = (state = InitialState, action) => {
   let tempArray;
   switch (action.type) {
     case "SET_WIDTH":
-      newState = { ...state,   Dimensions: { width: action.width, height: state.Dimensions.height } };
+      newState = {
+        ...state,
+        Dimensions: { width: action.width, height: state.Dimensions.height }
+      };
       return newState;
-
-      case "SET_HEIGHT":
-        newState = { ...state,   Dimensions: { width: state.Dimensions.width, height: action.height } };
-        return newState;
+      alert("");
+    case "SET_HEIGHT":
+      newState = {
+        ...state,
+        Dimensions: { width: state.Dimensions.width, height: action.height }
+      };
+      return newState;
     case "START_GAME":
-      
       newState = {
         ...state,
         GameStatus: "Начата",
@@ -86,7 +91,7 @@ const Reducer = (state = InitialState, action) => {
       return newState;
       return;
     case "RESET_GAME":
-      newState = { ...state, GameStatus: "Начата" };
+      newState = { ...state, GameStatus: "Начата", ReverseDirection: "up" };
       return newState;
     case "STOP_GAME":
       newState = { ...state, GameStatus: "Завершена" };
@@ -235,7 +240,7 @@ const Reducer = (state = InitialState, action) => {
 };
 const store = createStore(Reducer, InitialState);
 store.subscribe(() => {
-  //console.log(store.getState());
+  console.log(store.getState());
 });
 ReactDOM.render(
   <Provider store={store}>

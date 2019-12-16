@@ -2,17 +2,56 @@ $PlayAreaEmptyDotColor: rgb(255, 255, 255);
 $PlayAreaSnakeDotColor: rgb(106, 228, 69);
 $PlayAreaDotColor: $PlayAreaEmptyDotColor;
 $MenuPanelWrapperColor: rgb(236, 236, 236);
+$ButtonColor: rgb(4, 190, 45);
 
-
+@mixin Button($color: $ButtonColor) {
+  margin: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 25px;
+  background-color: $color;
+  border: 1px solid darken($color, 5%);
+  box-shadow: 0px 0px 2px 2px #00000013, inset 0px 0px 2px 2px #ffffff10;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+.PlayAreaInfo {
+  display: flex;
+  width: 100%;
+  align-self: center;
+  justify-self: center;
+}
 .PlayArea {
   background-color: lighten($PlayAreaEmptyDotColor, 10%);
   border: 1px solid rgb(231, 223, 223);
+}
+.InfoArea {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 1px solid #ccc;
+  width: 400px;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 2px rgba(150, 150, 150, 0.5);
+}
+.InfoAreaWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0px 0px 10px 2px rgba(150, 150, 150, 0.5);
+  background-color: lighten($MenuPanelWrapperColor, 40%);
 }
 .PlayAreaWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding:20px;
+  padding: 20px;
   box-shadow: 0px 0px 10px 2px rgba(150, 150, 150, 0.5);
   background-color: lighten($MenuPanelWrapperColor, 40%);
 }
@@ -56,4 +95,31 @@ $MenuPanelWrapperColor: rgb(236, 236, 236);
   height: auto;
   margin-bottom: -100%;
   align-self: center;
+}
+
+.PlayAreaStart {
+  @include Button;
+  margin-top: 30px;
+}
+
+///Оптимизация под мобильные устройства
+
+@media (max-width: 767px) {
+  .InfoArea {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid #ccc;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 2px rgba(150, 150, 150, 0.5);
+  }
+  .InfoAreaWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 10px 2px rgba(150, 150, 150, 0.5);
+    background-color: lighten($MenuPanelWrapperColor, 40%);
+  }
 }
