@@ -1,12 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-
+//Компонент панель меню.Отображает текущий статус игры.
+//В мобильной версии предоставляет графический интерфейс управления змейкой
 class MenuPanel extends React.Component {
   constructor(props) {
     super(props);
     
   }
-
+//Отрисовка компонента
   render() {
     return (
       <div className="MenuPanelWrapper">
@@ -71,7 +72,7 @@ class MenuPanel extends React.Component {
     );
   }
 }
-
+//Подключение к store
 export default connect(
   store => ({ Data: store }),
   dispatch => ({
